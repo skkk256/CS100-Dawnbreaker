@@ -3,6 +3,8 @@
 
 #include "ObjectBase.h"
 
-class GameObject : public ObjectBase {};
+class GameObject : public ObjectBase {
+
+};
 
 #endif // GAMEOBJECTS_H__

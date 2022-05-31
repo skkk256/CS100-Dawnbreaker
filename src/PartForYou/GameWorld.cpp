@@ -1,4 +1,5 @@
 #include "GameWorld.h"
+#include "GameObjects.h"
 
 GameWorld::GameWorld() {
 
@@ -9,7 +10,7 @@ GameWorld::~GameWorld() {
 }
 
 void GameWorld::Init() { 
-
+	ObjectList.push_back(new )
 }
 
 LevelStatus GameWorld::Update() {
