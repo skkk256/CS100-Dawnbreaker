@@ -1,0 +1,13 @@
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/ProvidedFramework.dir
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/PartForYou.dir
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/Dawnbreaker.dir
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/INSTALL.dir
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/ALL_BUILD.dir
+D:/aDrive/file/CS100-HW89/build/CMakeFiles/ZERO_CHECK.dir
+D:/aDrive/file/CS100-HW89/build/SOIL/CMakeFiles/SOIL.dir
+D:/aDrive/file/CS100-HW89/build/SOIL/CMakeFiles/INSTALL.dir
+D:/aDrive/file/CS100-HW89/build/SOIL/CMakeFiles/ALL_BUILD.dir
+D:/aDrive/file/CS100-HW89/build/freeglut/CMakeFiles/freeglut.dir
+D:/aDrive/file/CS100-HW89/build/freeglut/CMakeFiles/freeglut_static.dir
+D:/aDrive/file/CS100-HW89/build/freeglut/CMakeFiles/INSTALL.dir
+D:/aDrive/file/CS100-HW89/build/freeglut/CMakeFiles/ALL_BUILD.dir

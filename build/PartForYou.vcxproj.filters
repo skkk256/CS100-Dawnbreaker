@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\aDrive\file\CS100-HW89\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7912074F-9310-3DEA-A3DB-C4B92C51813E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{C93D610A-E551-385C-B941-316E114C4D52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

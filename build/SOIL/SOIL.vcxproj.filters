@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\third_party\SOIL\src\image_dxt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\third_party\SOIL\src\image_helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\third_party\SOIL\src\soil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\third_party\SOIL\src\stb_image_aug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\aDrive\file\CS100-HW89\third_party\SOIL\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{C93D610A-E551-385C-B941-316E114C4D52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
