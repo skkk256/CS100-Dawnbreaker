@@ -1,10 +1,10 @@
 # CS100-Dawnbreaker
 HW8/9
 
-**ddl**: 
+**DDL:** 
 - HW8 - 6/6;
 - HW9 - 6/30
-## daily log
+## Daily Log
 #### 5/31
 - 新建仓库
 - 读题
