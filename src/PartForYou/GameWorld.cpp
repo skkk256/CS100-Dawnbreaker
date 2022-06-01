@@ -2,8 +2,7 @@
 #include "GameObjects.h"
 #include "utils.h"
 
-GameWorld::GameWorld() : life(3) {
-
+GameWorld::GameWorld() : life(3), dawnbreaker(nullptr) {
 }
 
 GameWorld::~GameWorld() {
@@ -11,14 +10,15 @@ GameWorld::~GameWorld() {
 }
 
 void GameWorld::Init() {
-	dawnbreaker = new Dawnbreaker(100, 300, this);
+	dawnbreaker = new Dawnbreaker(300, 100, this);
 	for (int i = 1; i < 30; ++i) {
-		ObjectList.push_back(
-			&Star(randInt(0, WINDOW_WIDTH - 1), randInt(0, WINDOW_HEIGHT - 1), randInt(10, 40) / 100.0));
+		ObjectList.push_back(new Star(randInt(0, WINDOW_WIDTH - 1), randInt(0, WINDOW_HEIGHT - 1), randInt(10, 40) / 100.0));
 	}
 }
 
 LevelStatus GameWorld::Update() {
+	if (randInt(1, 30) == 1)
+		ObjectList.push_back(new Star(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, randInt(10, 40) / 100.0));
 	dawnbreaker->Update();
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {
 		(*iter)->Update();
@@ -28,14 +28,15 @@ LevelStatus GameWorld::Update() {
 		return LevelStatus::DAWNBREAKER_DESTROYED;
 	}
 
-	if (randInt(1, 30) == 1) 
-		ObjectList.push_back(&Star(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, randInt(10, 40) / 100.0));
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {
-		(*iter)->Update();
+		if ((*iter)->JudgeDestroyed()) {
+			ObjectList.remove(*iter);
+		}
 	}
 }
 
 void GameWorld::CleanUp() {
+
 }
 
 

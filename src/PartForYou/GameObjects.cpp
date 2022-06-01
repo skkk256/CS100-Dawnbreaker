@@ -23,7 +23,7 @@ bool GameObject::JudgeDestroyed() const {
 }
 
 //star
-Star::Star(int x, int y, double size) : GameObject(IMGID_STAR, x, y, 0, 0, size) {}
+Star::Star(int x, int y, double size) : GameObject(IMGID_STAR, x, y, 0, 4, size) {}
 
 bool Star::IsEnemy() {
 	return false;
