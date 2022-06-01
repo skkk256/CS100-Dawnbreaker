@@ -2,8 +2,8 @@
 #define GAMEWORLD_H__
 
 #include <list>
-#include "GameObjects.h"
 #include "WorldBase.h"
+#include "GameObjects.h"
 
 class GameWorld : public WorldBase {
 public:
@@ -19,7 +19,9 @@ public:
   virtual bool IsGameOver() const override;
 
 private:
-	std::list<GameObject> ObjectList;
+	int life;
+	Dawnbreaker* dawnbreaker;
+	std::list<GameObject*> ObjectList;
 };
 
 #endif // !GAMEWORLD_H__
