@@ -20,23 +20,39 @@ LevelStatus GameWorld::Update() {
 	if (randInt(1, 30) == 1)
 		ObjectList.push_back(new Star(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, randInt(10, 40) / 100.0));
 	dawnbreaker->Update();
+	
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {
 		(*iter)->Update();
 	}
+	
 	if (IsGameOver()) {
 		life -= 1;
 		return LevelStatus::DAWNBREAKER_DESTROYED;
 	}
 
-	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {
+	if (dawnbreaker->NeedShoot() == 1) {
+		ObjectList.push_back(
+			new Projectile(dawnbreaker->GetX(), dawnbreaker->GetY() + 50, 0.5 + 0.1 * dawnbreaker->GetUpgrade(), 5 + 3 * dawnbreaker->GetUpgrade())
+		);
+	}
+	for (auto iter = ObjectList.begin(); iter != ObjectList.end();) {
 		if ((*iter)->JudgeDestroyed()) {
-			ObjectList.remove(*iter);
+			delete* iter;
+			ObjectList.erase(iter++);
+		}
+		else {
+			++iter;
 		}
 	}
 }
 
 void GameWorld::CleanUp() {
-
+	delete dawnbreaker;
+	for (auto iter = ObjectList.begin(); iter != ObjectList.end();) {
+		delete* iter;
+		ObjectList.erase(iter++);
+	}
+	ObjectList.clear();
 }
 
 

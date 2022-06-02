@@ -21,18 +21,30 @@ class Enemy : public GameObject {
 };
 
 class Projectile : public GameObject {
-
+private:
+	int hurt;
+	bool isRed = false;
+public:
+	Projectile(int x, int y, double size, int hurt, bool isred);
+	Projectile(int x, int y, double size, int hurt);
+	void Update();
+	bool IsEnemy() override;
 };
 
 class Dawnbreaker : public GameObject {
 private:
 	int HP;
 	int energy;
+	int upgradeTimes = 1;
 	WorldBase* theWorld;
+	int shoot = 0;
 public:
 	Dawnbreaker(int x, int y, WorldBase* worldptr);
-	bool IsEnemy() override;
 	void Update();
+	bool IsEnemy() override;
+	int NeedShoot();
+	void Upgrade();
+	int GetUpgrade() const;
 };
 
 class Star : public GameObject {
