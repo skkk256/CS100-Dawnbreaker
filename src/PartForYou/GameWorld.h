@@ -20,6 +20,7 @@ public:
 
 private:
 	int life;
+	int allowed;
 	Dawnbreaker* dawnbreaker;
 	std::list<GameObject*> ObjectList;
 };

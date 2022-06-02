@@ -10,14 +10,6 @@ void GameObject::DestroyIt() {
 	isDestroyed = true;
 }
 
-void GameObject::DecreaseHD() {
-
-}
-
-void GameObject::IncreaseHD() {
-
-}
-
 bool GameObject::JudgeDestroyed() const {
 	return isDestroyed;
 }
@@ -31,7 +23,10 @@ bool Star::IsEnemy() {
 
 void Star::Update() {
 	if (JudgeDestroyed()) return;
-	if (this->GetY() < 0) DestroyIt();
+	if (this->GetY() < 0) {
+		DestroyIt();
+		return;
+	}
 	MoveTo(GetX(), GetY() - 1);
 }
 
@@ -58,9 +53,16 @@ int Dawnbreaker::GetUpgrade() const{
 	return upgradeTimes;
 }
 
+void Dawnbreaker::SetHP(int hp) {
+
+}
+
 void Dawnbreaker::Update() {
 	if (JudgeDestroyed()) return;
-	if (HP == 0) DestroyIt();
+	if (HP == 0) {
+		DestroyIt();
+		return;
+	}
 	if (energy < 10) energy += 1;
 	if (theWorld->GetKey(KeyCode::UP)) {
 		if (GetY() + 5 <= WINDOW_HEIGHT - 1)

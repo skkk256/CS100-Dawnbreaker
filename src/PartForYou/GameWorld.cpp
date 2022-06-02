@@ -1,8 +1,10 @@
 #include "GameWorld.h"
 #include "GameObjects.h"
+#include "Enemy.h"
 #include "utils.h"
 
-GameWorld::GameWorld() : life(3), dawnbreaker(nullptr) {
+//²âÊÔÓÃ
+GameWorld::GameWorld() : life(3), dawnbreaker(nullptr), allowed(5) {
 }
 
 GameWorld::~GameWorld() {
@@ -19,6 +21,12 @@ void GameWorld::Init() {
 LevelStatus GameWorld::Update() {
 	if (randInt(1, 30) == 1)
 		ObjectList.push_back(new Star(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, randInt(10, 40) / 100.0));
+	if (allowed > 0) {
+		ObjectList.push_back(
+			new Alphatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, 20, 4, 2)
+		);
+		allowed -= 1;
+	}
 	dawnbreaker->Update();
 	
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {

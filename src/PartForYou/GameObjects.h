@@ -11,13 +11,7 @@ public:
 	GameObject(int imageID, int x, int y, int direction, int layer, double size);
 	void DestroyIt();
 	virtual bool IsEnemy() = 0;
-	void DecreaseHD();
-	void IncreaseHD();
 	bool JudgeDestroyed() const;
-};
-
-class Enemy : public GameObject {
-
 };
 
 class Projectile : public GameObject {
@@ -45,6 +39,7 @@ public:
 	int NeedShoot();
 	void Upgrade();
 	int GetUpgrade() const;
+	void SetHP(int hp);
 };
 
 class Star : public GameObject {
