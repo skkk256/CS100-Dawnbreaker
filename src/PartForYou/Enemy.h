@@ -11,10 +11,13 @@ private:
 	int flightTime = 0;
 	int flightStrategy = 0;
 	int shoot = 0;
+protected:
+	Dawnbreaker* player;
 public:
-	Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy);
+	Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, Dawnbreaker* player);
 	bool IsEnemy() override;
-	int NeedShoot();
+	void SetShoot(int flag);
+	int NeedShoot() const;
 	void SetFlightTime(int t);
 	void SetFlightStrategy(int way);
 	int GetFlightTime() const;
@@ -32,8 +35,22 @@ public:
 
 class Alphatron : public Enemy {
 public:
-	Alphatron(int x, int y, int HP, int agresivity, int speed);
+	Alphatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player);
 	void Update() override;
+	int GetType() const override;
 };
 
+class Sigmatron : public Enemy {
+public:
+	Sigmatron(int x, int y, int HP, int speed, Dawnbreaker* player);
+	void Update() override;
+	int GetType() const override;
+};
+
+class Omegatron : public Enemy {
+public:
+	Omegatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player);
+	void Update() override;
+	int GetType() const override;
+};
 #endif

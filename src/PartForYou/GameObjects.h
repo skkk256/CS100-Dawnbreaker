@@ -8,21 +8,12 @@ class GameObject : public ObjectBase {
 private:
 	bool isDestroyed;
 public:
+	enum { player, alpha, sigma, omega, proj, tool, star };
 	GameObject(int imageID, int x, int y, int direction, int layer, double size);
 	void DestroyIt();
 	virtual bool IsEnemy() = 0;
+	virtual int GetType() const = 0;
 	bool JudgeDestroyed() const;
-};
-
-class Projectile : public GameObject {
-private:
-	int hurt;
-	bool isRed = false;
-public:
-	Projectile(int x, int y, double size, int hurt, bool isred);
-	Projectile(int x, int y, double size, int hurt);
-	void Update();
-	bool IsEnemy() override;
 };
 
 class Dawnbreaker : public GameObject {
@@ -40,6 +31,7 @@ public:
 	void Upgrade();
 	int GetUpgrade() const;
 	void SetHP(int hp);
+	int GetType() const override;
 };
 
 class Star : public GameObject {
@@ -49,5 +41,6 @@ public:
 	Star(int x, int y, double size);
 	bool IsEnemy() override;
 	void Update();
+	int GetType() const override;
 };
 #endif // GAMEOBJECTS_H__

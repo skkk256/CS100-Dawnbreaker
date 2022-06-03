@@ -30,6 +30,11 @@ void Star::Update() {
 	MoveTo(GetX(), GetY() - 1);
 }
 
+int Star::GetType() const
+{
+	return star;
+}
+
 
 //Dawnbreaker
 Dawnbreaker::Dawnbreaker(int x, int y, WorldBase* worldptr) : 
@@ -57,6 +62,11 @@ void Dawnbreaker::SetHP(int hp) {
 
 }
 
+int Dawnbreaker::GetType() const
+{
+	return player;
+}
+
 void Dawnbreaker::Update() {
 	if (JudgeDestroyed()) return;
 	if (HP == 0) {
@@ -80,26 +90,11 @@ void Dawnbreaker::Update() {
 		if (GetX() + 4 <= WINDOW_WIDTH - 1)
 			MoveTo(GetX() + 4, GetY());
 	}
+	shoot = 0;
 	if (theWorld->GetKey(KeyCode::FIRE1) && energy >= 10) {
 		energy -= 10;
 		shoot = 1;
 	}
 }
 
-//projectile
-bool Projectile::IsEnemy() {
-	return isRed;
-}
-
-Projectile::Projectile(int x, int y, double size, int hurt, bool isred) :
-	GameObject(IMGID_RED_BULLET, x, y, 0, 1, size), hurt(hurt), isRed(isred) {}
-
-Projectile::Projectile(int x, int y, double size, int hurt) : 
-	GameObject(IMGID_BLUE_BULLET, x, y, 0, 1, size), hurt(hurt) {}
-
-void Projectile::Update(){
-	if (JudgeDestroyed()) return;
-	if (this->GetY() > WINDOW_HEIGHT - 1) DestroyIt();
-	MoveTo(GetX(), GetY() + 6);
-}
 

@@ -265,6 +265,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Projectile.h" />
+    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Projectile.cpp" />
     <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Enemy.h" />
     <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Enemy.cpp" />
     <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Tools.h" />

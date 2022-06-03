@@ -20,8 +20,11 @@ public:
 
 private:
 	int life;
+	int destoryed = 0;
+	int onScreen = 0;
 	int allowed;
 	Dawnbreaker* dawnbreaker;
+public:
 	std::list<GameObject*> ObjectList;
 };
 
