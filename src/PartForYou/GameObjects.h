@@ -7,8 +7,10 @@
 class GameObject : public ObjectBase {
 private:
 	bool isDestroyed;
+protected:
+
 public:
-	enum { player, alpha, sigma, omega, proj, tool, star };
+	enum { player, alpha, sigma, omega, proj, tool, star, explosion };
 	GameObject(int imageID, int x, int y, int direction, int layer, double size);
 	void DestroyIt();
 	virtual bool IsEnemy() = 0;
@@ -20,27 +22,39 @@ class Dawnbreaker : public GameObject {
 private:
 	int HP;
 	int energy;
-	int upgradeTimes = 1;
-	WorldBase* theWorld;
+	int upgradeTimes = 0;
+	int meteors = 0;
 	int shoot = 0;
+	WorldBase* theWorld;
 public:
 	Dawnbreaker(int x, int y, WorldBase* worldptr);
-	void Update();
+	void Update() override;
 	bool IsEnemy() override;
 	int NeedShoot();
 	void Upgrade();
 	int GetUpgrade() const;
 	void SetHP(int hp);
+	int GetHP() const;
 	int GetType() const override;
+	void SetMeteors(int m);
+	int GetMeteors() const;
 };
 
 class Star : public GameObject {
-private:
-
 public:
 	Star(int x, int y, double size);
 	bool IsEnemy() override;
-	void Update();
+	void Update() override;
+	int GetType() const override;
+};
+
+class Explosion : public GameObject {
+private:
+	int trick;
+public:
+	Explosion(int x, int y);
+	void Update() override;
+	bool IsEnemy() override;
 	int GetType() const override;
 };
 #endif // GAMEOBJECTS_H__

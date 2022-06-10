@@ -1,9 +1,11 @@
 #include "Enemy.h"
 #include "utils.h"
+#include "Projectile.h"
+#include <cmath>
 
 //Enemy
-Enemy::Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, Dawnbreaker* player) :
-	GameObject(IMGID, x, y, 180, 0, 1.0), HP(HP), aggressivity(aggressivity), speed(speed), energy(energy), player(player) {}
+Enemy::Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, GameWorld* worldptr) :
+	GameObject(IMGID, x, y, 180, 0, 1.0), HP(HP), aggressivity(aggressivity), speed(speed), energy(energy), theWorld(worldptr) {}
 
 bool Enemy::IsEnemy() {
 	return true;
@@ -61,26 +63,33 @@ void Enemy::SetSpeed(int m_speed) {
 	speed = m_speed;
 }
 
-int Enemy::GetAgreesivity()
-{
+int Enemy::GetAgreesivity() const {
 	return aggressivity;
+}
+
+void Enemy::CollDetect() {
+	Dawnbreaker* player = theWorld->GetDawnbreaker();
+	int d = std::sqrt(pow(GetX() - player->GetX(),2) + pow(GetY() - player->GetY(), 2));
+	if (d < 30.0 * (GetSize() + player->GetSize())) {
+		DestroyIt();
+		player->SetHP(player->GetHP() - 20);
+	}
 }
 
 void Enemy::SetHP(int hp) {
 	HP = hp;
 }
 
-
-Alphatron::Alphatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player) :
-	Enemy(IMGID_ALPHATRON, x, y, HP, agresivity, speed, 25, player) {}
-
 //Alphatron
-int Alphatron::GetType() const
-{
+Alphatron::Alphatron(int x, int y, int HP, int agresivity, int speed, GameWorld* worldptr) :
+	Enemy(IMGID_ALPHATRON, x, y, HP, agresivity, speed, 25, worldptr) {}
+
+int Alphatron::GetType() const {
 	return alpha;
 }
 
 void Alphatron::Update() {
+	Dawnbreaker* player = theWorld->GetDawnbreaker();
 	//ÆÆ»µ¼ì²â
 	if (JudgeDestroyed()) return;
 	//ÊÇ·ñÐèÒªÆÆ»·
@@ -89,7 +98,19 @@ void Alphatron::Update() {
 		return;
 	}
 	//3.Åö×²¼ì²é
-	
+	if (theWorld->Detect(this, GameObject::player)) {
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
+		DestroyIt();
+		theWorld->IncreaseScore(50);
+		theWorld->IncreasDestroyed(1);
+		player->SetHP(player->GetHP() - 20);
+	}
+	if (theWorld->Detect(this, GameObject::proj)) {
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
+		DestroyIt();
+		theWorld->IncreaseScore(50);
+		theWorld->IncreasDestroyed(1);
+	}
 	//4.¹¥»÷
 	SetShoot(0);
 	if ((player->GetX() - GetX() <= 10 && player->GetX() - this->GetX() >= -10) && GetEnergy() >= 25) {
@@ -132,17 +153,17 @@ void Alphatron::Update() {
 }
 
 //Sigmatron
-Sigmatron::Sigmatron(int x, int y, int HP, int speed, Dawnbreaker* player) :
-	Enemy(IMGID_SIGMATRON, x, y, HP, 0, speed, 0, player) {}
+Sigmatron::Sigmatron(int x, int y, int HP, int speed, GameWorld* worldptr) :
+	Enemy(IMGID_SIGMATRON, x, y, HP, 0, speed, 0, worldptr) {}
 
 
-int Sigmatron::GetType() const
-{
+int Sigmatron::GetType() const {
 	return sigma;
 }
 
 
 void Sigmatron::Update() {
+	Dawnbreaker* player = theWorld->GetDawnbreaker();
 	//ÆÆ»µ¼ì²â
 	if (JudgeDestroyed()) return;
 	//ÊÇ·ñÐèÒªÆÆ»·
@@ -151,7 +172,8 @@ void Sigmatron::Update() {
 		return;
 	}
 	//3.Åö×²¼ì²é
-	// 
+	CollDetect();
+	if (JudgeDestroyed()) return;
 	//4.¹¥»÷
 	SetShoot(0);
 	if (player->GetX() - this->GetX() <= 10 && player->GetX() - this->GetX() >= -10) {
@@ -193,18 +215,21 @@ void Sigmatron::Update() {
 		MoveTo(GetX() + GetSpeed(), GetY() - GetSpeed());
 		break;
 	}
+	//8.ÔÙ´ÎÅö×²¼ì²â
+	CollDetect();
+	if (JudgeDestroyed()) return;
 }
 
 //Omegatron
-Omegatron::Omegatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player) :
-	Enemy(IMGID_OMEGATRON, x, y, HP, agresivity, speed, 50, player) {}
+Omegatron::Omegatron(int x, int y, int HP, int agresivity, int speed, GameWorld* worldptr) :
+	Enemy(IMGID_OMEGATRON, x, y, HP, agresivity, speed, 50, worldptr) {}
 
-int Omegatron::GetType() const
-{
+int Omegatron::GetType() const {
 	return omega;
 }
 
 void Omegatron::Update() {
+	Dawnbreaker* player = theWorld->GetDawnbreaker();
 	//ÆÆ»µ¼ì²â
 	if (JudgeDestroyed()) return;
 	//ÊÇ·ñÐèÒªÆÆ»·
@@ -212,8 +237,9 @@ void Omegatron::Update() {
 		DestroyIt();
 		return;
 	}
-	//3.Åö×²¼ì²é
-
+	//3.Åö×²¼ì²â
+	CollDetect();
+	if (JudgeDestroyed()) return;
 	//4.¹¥»÷
 	SetShoot(0);
 	if (GetEnergy() >= 50) {
@@ -251,4 +277,7 @@ void Omegatron::Update() {
 		MoveTo(GetX() + GetSpeed(), GetY() - GetSpeed());
 		break;
 	}
+	//ÔÙ´ÎÅö×²¼ì²â
+	CollDetect();
+	if (JudgeDestroyed()) return;
 }

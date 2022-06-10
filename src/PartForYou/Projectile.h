@@ -10,13 +10,15 @@ private:
 	int hurt;
 	bool isRed = false;
 	int flightStrategy = 0;
+	Dawnbreaker* player;
 public:
-	Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred);
+	Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred, Dawnbreaker* player);
 	int GetFlightStrategy() const;
 	void SetFlightStrategy(int way);
-	void Update();
+	void Update() override;
 	bool IsEnemy() override;
 	int GetType() const override;
+	int GetHurt() const;
 };
 
 #endif // !PROJECTILE_H__

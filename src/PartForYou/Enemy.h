@@ -1,6 +1,7 @@
 #ifndef ENEMY_H__
 #define ENEMY_H__
 #include "GameObjects.h"
+#include "GameWorld.h"
 
 class Enemy : public GameObject {
 private:
@@ -12,9 +13,9 @@ private:
 	int flightStrategy = 0;
 	int shoot = 0;
 protected:
-	Dawnbreaker* player;
+	GameWorld* theWorld;
 public:
-	Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, Dawnbreaker* player);
+	Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, GameWorld* worldptr);
 	bool IsEnemy() override;
 	void SetShoot(int flag);
 	int NeedShoot() const;
@@ -28,28 +29,27 @@ public:
 	void SetEnergy(int m_energy);
 	int GetSpeed() const;
 	void SetSpeed(int m_speed);
-	int GetAgreesivity();
-
-
+	int GetAgreesivity() const;
+	void CollDetect();
 };
 
 class Alphatron : public Enemy {
 public:
-	Alphatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player);
+	Alphatron(int x, int y, int HP, int agresivity, int speed, GameWorld* worldptr);
 	void Update() override;
 	int GetType() const override;
 };
 
 class Sigmatron : public Enemy {
 public:
-	Sigmatron(int x, int y, int HP, int speed, Dawnbreaker* player);
+	Sigmatron(int x, int y, int HP, int speed, GameWorld* worldptr);
 	void Update() override;
 	int GetType() const override;
 };
 
 class Omegatron : public Enemy {
 public:
-	Omegatron(int x, int y, int HP, int agresivity, int speed, Dawnbreaker* player);
+	Omegatron(int x, int y, int HP, int agresivity, int speed, GameWorld* worldptr);
 	void Update() override;
 	int GetType() const override;
 };

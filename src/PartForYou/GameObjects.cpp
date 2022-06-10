@@ -59,12 +59,26 @@ int Dawnbreaker::GetUpgrade() const{
 }
 
 void Dawnbreaker::SetHP(int hp) {
+	HP = hp;
+}
 
+int Dawnbreaker::GetHP() const {
+	return HP;
 }
 
 int Dawnbreaker::GetType() const
 {
 	return player;
+}
+
+void Dawnbreaker::SetMeteors(int m)
+{
+	meteors = m;
+}
+
+int Dawnbreaker::GetMeteors() const
+{
+	return meteors;
 }
 
 void Dawnbreaker::Update() {
@@ -74,7 +88,7 @@ void Dawnbreaker::Update() {
 		return;
 	}
 	if (energy < 10) energy += 1;
-	if (theWorld->GetKey(KeyCode::UP)) {
+	if ((GameWorld*)theWorld->GetKey(KeyCode::UP)) {
 		if (GetY() + 5 <= WINDOW_HEIGHT - 1)
 			MoveTo(GetX(), GetY() + 4);
 	}
@@ -97,4 +111,25 @@ void Dawnbreaker::Update() {
 	}
 }
 
+//Explosion
+Explosion::Explosion(int x, int y) :
+	GameObject(IMGID_EXPLOSION, x, y, 0, 3, 4.5), trick(1) {}
 
+void Explosion::Update() {
+	if (trick == 20) {
+		DestroyIt();
+		return;
+	}
+	trick += 1;
+	SetSize(GetSize() - 0.2);
+}
+
+bool Explosion::IsEnemy()
+{
+	return false;
+}
+
+int Explosion::GetType() const
+{
+	return explosion;
+}

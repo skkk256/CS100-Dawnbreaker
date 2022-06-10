@@ -11,8 +11,13 @@ int Projectile::GetType() const
 	return proj;
 }
 
-Projectile::Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred) :
-	GameObject(IMGID, x, y, direction, 1, size), hurt(hurt), isRed(isred) {}
+int Projectile::GetHurt() const
+{
+	return hurt;
+}
+
+Projectile::Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred, Dawnbreaker* player) :
+	GameObject(IMGID, x, y, direction, 1, size), hurt(hurt), isRed(isred), player(player) {}
 
 int Projectile::GetFlightStrategy() const
 {
@@ -31,6 +36,9 @@ void Projectile::Update() {
 		DestroyIt();
 		return;
 	}
+	//Åö×²¼ì²â
+
+	//ÒÆ¶¯
 	switch (flightStrategy)
 	{
 	case 0:

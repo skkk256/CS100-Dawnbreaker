@@ -18,13 +18,20 @@ public:
 
   virtual bool IsGameOver() const override;
 
+  int Detect(GameObject* obj, int type);
+
+  Dawnbreaker* GetDawnbreaker() const;
+
+  void AddIn(GameObject* obj);
+
+  void IncreasDestroyed(int n);
+
 private:
-	int life;
+	int lives;
 	int destoryed = 0;
 	int onScreen = 0;
 	int allowed;
 	Dawnbreaker* dawnbreaker;
-public:
 	std::list<GameObject*> ObjectList;
 };
 
