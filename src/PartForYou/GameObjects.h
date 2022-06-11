@@ -10,7 +10,7 @@ private:
 protected:
 
 public:
-	enum { player, alpha, sigma, omega, proj, tool, star, explosion };
+	enum { player, alpha, sigma, omega, proj, bproj, tool, star, explosion };
 	GameObject(int imageID, int x, int y, int direction, int layer, double size);
 	void DestroyIt();
 	virtual bool IsEnemy() = 0;

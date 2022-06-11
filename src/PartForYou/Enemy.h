@@ -30,7 +30,7 @@ public:
 	int GetSpeed() const;
 	void SetSpeed(int m_speed);
 	int GetAgreesivity() const;
-	void CollDetect();
+	bool CollDetect();
 };
 
 class Alphatron : public Enemy {

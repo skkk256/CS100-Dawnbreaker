@@ -31,7 +31,9 @@ LevelStatus GameWorld::Update() {
 		<< "Lives: " << lives << "   "
 		<< "Level: " << GetLevel() << "   "
 		<< "Enemies: " << destoryed << "/" << 3 * GetLevel() << "   "
-		<< "Score: " << GetScore();
+		<< "Score: " << GetScore()
+		<< "hurt: " << 5 + 3 * dawnbreaker->GetUpgrade()
+		<< "HP of a" << 20 + 2 * GetLevel();
 	SetStatusBarMessage(bar.str());
 	int todestroyed = 3 * GetLevel() - destoryed;
 	int maxOnScreen = (5 + GetLevel()) / 2;
@@ -144,10 +146,22 @@ int GameWorld::Detect(GameObject* obj, int t)
 			return 1;
 		}
 	}
+	else if (t == GameObject::bproj) {
+		for (auto ptr : ObjectList) {
+			if (ptr->GetType() == GameObject::proj && !(ptr->IsEnemy()) && !(ptr->JudgeDestroyed())) {
+				int d = std::sqrt(pow(obj->GetX() - ptr->GetX(), 2) + pow(obj->GetY() - ptr->GetY(), 2));
+				if (d < 30.0 * (obj->GetSize() + ptr->GetSize())) {
+					ptr->DestroyIt();
+					return ((Projectile*)(ptr))->GetHurt();
+				}
+			}
+		}
+	}
 	for (auto ptr : ObjectList) {
-		if (ptr->GetType() == t) {
+		if (ptr->GetType() == t && !(ptr->JudgeDestroyed())) {
 			int d = std::sqrt(pow(obj->GetX() - ptr->GetX(), 2) + pow(obj->GetY() - ptr->GetY(), 2));
 			if (d < 30.0 * (obj->GetSize() + ptr->GetSize())) {
+				ptr->DestroyIt();
 				switch (ptr->GetType())
 				{
 				default:

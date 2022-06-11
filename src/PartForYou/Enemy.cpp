@@ -67,13 +67,27 @@ int Enemy::GetAgreesivity() const {
 	return aggressivity;
 }
 
-void Enemy::CollDetect() {
+bool Enemy::CollDetect() {
 	Dawnbreaker* player = theWorld->GetDawnbreaker();
-	int d = std::sqrt(pow(GetX() - player->GetX(),2) + pow(GetY() - player->GetY(), 2));
-	if (d < 30.0 * (GetSize() + player->GetSize())) {
+	if (theWorld->Detect(this, GameObject::player)) {
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
 		DestroyIt();
+		theWorld->IncreasDestroyed(1);
 		player->SetHP(player->GetHP() - 20);
+		return true;
 	}
+	if (int hurt = theWorld->Detect(this, GameObject::bproj)) {
+		if (GetHP() - hurt <= 0) {
+			theWorld->AddIn(new Explosion(GetX(), GetY()));
+			DestroyIt();
+			theWorld->IncreasDestroyed(1);
+			return true;
+		}
+		else {
+			SetHP(GetHP() - hurt);
+		}
+	}
+	return false;
 }
 
 void Enemy::SetHP(int hp) {
@@ -98,18 +112,9 @@ void Alphatron::Update() {
 		return;
 	}
 	//3.Åö×²¼ì²é
-	if (theWorld->Detect(this, GameObject::player)) {
-		theWorld->AddIn(new Explosion(GetX(), GetY()));
-		DestroyIt();
+	if (CollDetect()) {
 		theWorld->IncreaseScore(50);
-		theWorld->IncreasDestroyed(1);
-		player->SetHP(player->GetHP() - 20);
-	}
-	if (theWorld->Detect(this, GameObject::proj)) {
-		theWorld->AddIn(new Explosion(GetX(), GetY()));
-		DestroyIt();
-		theWorld->IncreaseScore(50);
-		theWorld->IncreasDestroyed(1);
+		return;
 	}
 	//4.¹¥»÷
 	SetShoot(0);
@@ -150,6 +155,11 @@ void Alphatron::Update() {
 		MoveTo(GetX() + GetSpeed(), GetY() - GetSpeed());
 		break;
 	}
+	//ÔÙ´ÎÅö×²¼ì²â
+	if (CollDetect()) {
+		theWorld->IncreaseScore(50);
+		return;
+	}
 }
 
 //Sigmatron
@@ -172,8 +182,10 @@ void Sigmatron::Update() {
 		return;
 	}
 	//3.Åö×²¼ì²é
-	CollDetect();
-	if (JudgeDestroyed()) return;
+	if (CollDetect()) {
+		theWorld->IncreaseScore(100);
+		return;
+	}
 	//4.¹¥»÷
 	SetShoot(0);
 	if (player->GetX() - this->GetX() <= 10 && player->GetX() - this->GetX() >= -10) {
@@ -182,15 +194,15 @@ void Sigmatron::Update() {
 		SetShoot(1);
 	}
 	//6.·ÉÐÐ²ßÂÔ
-	if (GetFlightTime() == 0) {
+	if (GetFlightTime() == 0 && NeedShoot() != 1) {
 		SetFlightStrategy(randInt(1, 3));
 		SetFlightTime(randInt(10, 50));
 	}
-	if (GetX() < 0) {
+	if (GetX() < 0 && NeedShoot() != 1) {
 		SetFlightStrategy(3);
 		SetFlightTime(randInt(10, 50));
 	}
-	if (GetX() >= WINDOW_WIDTH) {
+	if (GetX() >= WINDOW_WIDTH && NeedShoot() != 1) {
 		SetFlightStrategy(1);
 		SetFlightTime(randInt(10, 50));
 	}
@@ -216,8 +228,10 @@ void Sigmatron::Update() {
 		break;
 	}
 	//8.ÔÙ´ÎÅö×²¼ì²â
-	CollDetect();
-	if (JudgeDestroyed()) return;
+	if (CollDetect()) {
+		theWorld->IncreaseScore(100);
+		return;
+	}
 }
 
 //Omegatron
@@ -238,8 +252,10 @@ void Omegatron::Update() {
 		return;
 	}
 	//3.Åö×²¼ì²â
-	CollDetect();
-	if (JudgeDestroyed()) return;
+	if (CollDetect()) {
+		theWorld->IncreaseScore(200);
+		return;
+	}
 	//4.¹¥»÷
 	SetShoot(0);
 	if (GetEnergy() >= 50) {
@@ -278,6 +294,8 @@ void Omegatron::Update() {
 		break;
 	}
 	//ÔÙ´ÎÅö×²¼ì²â
-	CollDetect();
-	if (JudgeDestroyed()) return;
+	if (CollDetect()) {
+		theWorld->IncreaseScore(200);
+		return;
+	}
 }
