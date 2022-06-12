@@ -10,9 +10,9 @@ private:
 	int hurt;
 	bool isRed = false;
 	int flightStrategy = 0;
-	Dawnbreaker* player;
+	GameWorld* theWorld;
 public:
-	Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred, Dawnbreaker* player);
+	Projectile(const int IMGID, int x, int y, int direction, double size, int hurt, bool isred, GameWorld* theWorld);
 	int GetFlightStrategy() const;
 	void SetFlightStrategy(int way);
 	void Update() override;

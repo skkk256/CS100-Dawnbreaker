@@ -2,6 +2,7 @@
 #define ENEMY_H__
 #include "GameObjects.h"
 #include "GameWorld.h"
+#include "Meteors.h"
 
 class Enemy : public GameObject {
 private:

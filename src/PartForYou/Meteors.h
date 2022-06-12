@@ -1,17 +1,18 @@
-#ifndef TOOLS_H__
-#define TOOLS_H__
+#ifndef METEORS_H__
+#define METEORS_H__
 #include "GameObjects.h"
 #include "GameWorld.h"
 
-class Tools : public GameObject {
+class Meteors : public GameObject {
 private:
 	GameWorld* theWorld;
-	int m_type;
+	int type;
 public:
-	Tools(int x, int y, int m_type, int IMGID, GameWorld* worldptr);
+	Meteors(int x, int y, GameWorld* worldptr);
 	void Update() override;
 	bool IsEnemy() override;
 	int GetType() const override;
 };
 
-#endif // !TOOLS_H__
+
+#endif //!METERORS_H__

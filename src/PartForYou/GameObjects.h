@@ -7,10 +7,8 @@
 class GameObject : public ObjectBase {
 private:
 	bool isDestroyed;
-protected:
-
 public:
-	enum { player, alpha, sigma, omega, proj, bproj, tool, star, explosion };
+	enum type{ player, alpha, sigma, omega, proj, bproj, tool, star, explosion, HP_T, M_T, U_T, Meter, enemy };
 	GameObject(int imageID, int x, int y, int direction, int layer, double size);
 	void DestroyIt();
 	virtual bool IsEnemy() = 0;
@@ -36,7 +34,7 @@ public:
 	void SetHP(int hp);
 	int GetHP() const;
 	int GetType() const override;
-	void SetMeteors(int m);
+	void IncreaseMeteors();
 	int GetMeteors() const;
 };
 
@@ -57,4 +55,6 @@ public:
 	bool IsEnemy() override;
 	int GetType() const override;
 };
+
+
 #endif // GAMEOBJECTS_H__

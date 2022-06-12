@@ -83,6 +83,8 @@ ENDIF()
 add_library(
   PartForYou
   STATIC
+  src/PartForYou/Meteors.h
+  src/PartForYou/Meteors.cpp
   src/PartForYou/Projectile.h
   src/PartForYou/Projectile.cpp
   src/PartForYou/Enemy.h

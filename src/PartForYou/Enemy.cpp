@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "utils.h"
 #include "Projectile.h"
+#include "Tools.h"
 #include <cmath>
 
 //Enemy
@@ -86,6 +87,12 @@ bool Enemy::CollDetect() {
 		else {
 			SetHP(GetHP() - hurt);
 		}
+	}
+	if (theWorld->Detect(this, GameObject::Meter)) {
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
+		DestroyIt();
+		theWorld->IncreasDestroyed(1);
+		return true;
 	}
 	return false;
 }
@@ -184,6 +191,9 @@ void Sigmatron::Update() {
 	//3.Åö×²¼ì²é
 	if (CollDetect()) {
 		theWorld->IncreaseScore(100);
+		if (randInt(1, 5) == 1) {
+			theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::HP_T, IMGID_HP_RESTORE_GOODIE, theWorld));
+		}
 		return;
 	}
 	//4.¹¥»÷
@@ -230,6 +240,9 @@ void Sigmatron::Update() {
 	//8.ÔÙ´ÎÅö×²¼ì²â
 	if (CollDetect()) {
 		theWorld->IncreaseScore(100);
+		if (randInt(1, 5) == 1) {
+			theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::HP_T, IMGID_HP_RESTORE_GOODIE, theWorld));
+		}
 		return;
 	}
 }
@@ -254,6 +267,14 @@ void Omegatron::Update() {
 	//3.Åö×²¼ì²â
 	if (CollDetect()) {
 		theWorld->IncreaseScore(200);
+		if (randInt(1, 5) == 1 || randInt(1, 5) == 2) {
+			if (randInt(1, 5) == 1) {
+				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::M_T, IMGID_METEOR_GOODIE, theWorld));
+			}
+			else {
+				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::U_T, IMGID_POWERUP_GOODIE, theWorld));
+			}
+		}
 		return;
 	}
 	//4.¹¥»÷
@@ -296,6 +317,14 @@ void Omegatron::Update() {
 	//ÔÙ´ÎÅö×²¼ì²â
 	if (CollDetect()) {
 		theWorld->IncreaseScore(200);
+		if (randInt(1, 5) == 1 || randInt(1, 5) == 2) {
+			if (randInt(1, 5) == 1) {
+				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::M_T, IMGID_METEOR_GOODIE, theWorld));
+			}
+			else {
+				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::U_T, IMGID_POWERUP_GOODIE, theWorld));
+			}
+		}
 		return;
 	}
 }

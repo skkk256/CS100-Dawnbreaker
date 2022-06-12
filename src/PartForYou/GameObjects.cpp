@@ -51,7 +51,7 @@ int Dawnbreaker::NeedShoot() {
 }
 
 void Dawnbreaker::Upgrade() {
-
+	upgradeTimes += 1;
 }
 
 int Dawnbreaker::GetUpgrade() const{
@@ -71,9 +71,9 @@ int Dawnbreaker::GetType() const
 	return player;
 }
 
-void Dawnbreaker::SetMeteors(int m)
+void Dawnbreaker::IncreaseMeteors()
 {
-	meteors = m;
+	meteors += 1;
 }
 
 int Dawnbreaker::GetMeteors() const
@@ -83,7 +83,7 @@ int Dawnbreaker::GetMeteors() const
 
 void Dawnbreaker::Update() {
 	if (JudgeDestroyed()) return;
-	if (HP == 0) {
+	if (HP <= 0) {
 		DestroyIt();
 		return;
 	}
@@ -108,6 +108,10 @@ void Dawnbreaker::Update() {
 	if (theWorld->GetKey(KeyCode::FIRE1) && energy >= 10) {
 		energy -= 10;
 		shoot = 1;
+	}
+	if (theWorld->GetKeyDown(KeyCode::FIRE2) && meteors >= 1) {
+		meteors -= 1;
+		shoot = 2;
 	}
 }
 
