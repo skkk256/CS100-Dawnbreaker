@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "utils.h"
 #include "Meteors.h"
+#include "Star.h"
 #include "Projectile.h"
 #include <algorithm>
 #include <sstream>
@@ -33,8 +34,8 @@ LevelStatus GameWorld::Update() {
 		<< "Level: " << GetLevel() << "   "
 		<< "Enemies: " << destoryed << "/" << 3 * GetLevel() << "   "
 		<< "Score: " << GetScore() << "  ";
-
 	SetStatusBarMessage(bar.str());
+
 	int todestroyed = 3 * GetLevel() - destoryed;
 	int maxOnScreen = (5 + GetLevel()) / 2;
 	allowed = std::min(todestroyed, maxOnScreen);
@@ -45,21 +46,22 @@ LevelStatus GameWorld::Update() {
 		int p2 = 2 * std::max(GetLevel() - 1, 0);
 		int p3 = 3 * std::max(GetLevel() - 2, 0);
 		int temp = p1 + p2 + p3;
-		if (randInt(1, temp) <= p1) {
+		int probability = randInt(1, temp);
+		if (probability <= p1) {
 			ObjectList.push_back(
-				new Alphatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, 20 + 2 * GetLevel(), 4 + GetLevel(), 2 + GetLevel() / 5, this)
+				new Alphatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT-1, 20 + 2 * GetLevel(), 4 + GetLevel(), 2 + GetLevel() / 5, this)
 			);
 			onScreen += 1;
 		}
-		else if (p1 < randInt(1, temp) && randInt(1, temp) <= p2) {
+		else if ( probability > p1 && probability <= p2 + p1) {
 			ObjectList.push_back(
-				new Sigmatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, 25 + 5 * GetLevel(), 2 + GetLevel() / 5, this)
+				new Sigmatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT-1, 25 + 5 * GetLevel(), 2 + GetLevel() / 5, this)
 			);
 			onScreen += 1;
 		}
-		else if (p2 < randInt(1, temp) && randInt(1, temp) <= p3) {
+		else if (probability > p1 + p2 && probability <= p2 + p1 + p3) {
 			ObjectList.push_back(
-				new Omegatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT, 20 + GetLevel(), 2 + 2 * GetLevel(), 3 + GetLevel() / 4, this)
+				new Omegatron(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT-1, 20 + GetLevel(), 2 + 2 * GetLevel(), 3 + GetLevel() / 4, this)
 			);
 			onScreen += 1;
 		}
@@ -117,7 +119,7 @@ LevelStatus GameWorld::Update() {
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end();) {
 		if ((*iter)->JudgeDestroyed()) {
 			if ((*iter)->GetType() == GameObject::alpha || (*iter)->GetType() == GameObject::sigma || (*iter)->GetType() == GameObject::omega) {
-				onScreen -= 1;
+				onScreen--;
 			}
 			delete* iter;
 			ObjectList.erase(iter++);
@@ -168,17 +170,25 @@ int GameWorld::Detect(GameObject* obj, int t)
 			if ((ptr->GetType() == GameObject::alpha || ptr->GetType() == GameObject::sigma || ptr->GetType() == GameObject::omega) &&  !(ptr->JudgeDestroyed())) {
 				int d = std::sqrt(pow(obj->GetX() - ptr->GetX(), 2) + pow(obj->GetY() - ptr->GetY(), 2));
 				if (d < 30.0 * (obj->GetSize() + ptr->GetSize())) {
-					int tempHP = ((Enemy*)(ptr))->GetHP();
-					int tempHurt = ((Projectile*)(obj))->GetHurt();
-					if (obj->GetType() == GameObject::Meter || ( tempHP - tempHurt <= 0)) {
+					if (obj->GetType() == GameObject::Meter) {
  						ptr->DestroyIt();
 						ObjectList.push_front(new Explosion(ptr->GetX(), ptr->GetY()));
 						return ptr->GetType();
 					}
 					else {
-						obj->DestroyIt();
-						((Enemy*)(ptr))->SetHP(((Enemy*)(ptr))->GetHP() - ((Projectile*)(obj))->GetHurt());
-						return 100;
+						int tempHP = ((Enemy*)(ptr))->GetHP();
+						int tempHurt = ((Projectile*)(obj))->GetHurt();
+						if (tempHP - tempHurt <= 0) {
+							obj->DestroyIt();
+							ptr->DestroyIt();
+							ObjectList.push_front(new Explosion(ptr->GetX(), ptr->GetY()));
+							return ptr->GetType();
+						}
+						else {
+							obj->DestroyIt();
+							((Enemy*)(ptr))->SetHP(((Enemy*)(ptr))->GetHP() - ((Projectile*)(obj))->GetHurt());
+							return 100;
+						}
 					}
 				}
 			}

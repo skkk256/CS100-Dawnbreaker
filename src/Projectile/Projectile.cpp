@@ -33,7 +33,7 @@ void Projectile::SetFlightStrategy(int way)
 void Projectile::Update() {
 	Dawnbreaker* player = theWorld->GetDawnbreaker();
 	if (JudgeDestroyed()) return;
-	if ((GetY() > WINDOW_HEIGHT - 1 && !(isRed)) || (GetY() < 0 && isRed)) {
+	if ((GetY() >= WINDOW_HEIGHT && !(isRed)) || (GetY() < 0 && isRed)) {
 		DestroyIt();
 		return;
 	}
@@ -42,6 +42,9 @@ void Projectile::Update() {
 		if (theWorld->Detect(this, GameObject::player)) {
 			player->SetHP(player->GetHP() - GetHurt());
 			DestroyIt();
+			if (player->GetHP() <= 0) {
+				player->DestroyIt();
+			}
 			return;
 		}
 	}
@@ -87,6 +90,9 @@ void Projectile::Update() {
 		if (theWorld->Detect(this, GameObject::player)) {
 			player->SetHP(player->GetHP() - GetHurt());
 			DestroyIt();
+			if (player->GetHP() <= 0) {
+				player->DestroyIt();
+			}
 			return;
 		}
 	}

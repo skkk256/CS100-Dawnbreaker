@@ -38,14 +38,6 @@ public:
 	int GetMeteors() const;
 };
 
-class Star : public GameObject {
-public:
-	Star(int x, int y, double size);
-	bool IsEnemy() override;
-	void Update() override;
-	int GetType() const override;
-};
-
 class Explosion : public GameObject {
 private:
 	int trick;

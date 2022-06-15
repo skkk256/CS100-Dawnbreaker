@@ -78,7 +78,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -95,10 +95,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -111,7 +111,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -128,10 +128,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -144,7 +144,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -161,10 +161,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -177,7 +177,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -193,10 +193,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\aDrive\file\CS100-HW89\src;D:\aDrive\file\CS100-HW89\src\ProvidedFramework;D:\aDrive\file\CS100-HW89\src\PartForYou;D:\aDrive\file\CS100-HW89\src\Enemy;D:\aDrive\file\CS100-HW89\src\Others;D:\aDrive\file\CS100-HW89\src\Projectile;D:\aDrive\file\CS100-HW89\src\Tools;D:\aDrive\file\CS100-HW89\third_party\freeglut\include;D:\aDrive\file\CS100-HW89\third_party\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -265,14 +265,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Meteors.h" />
-    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Meteors.cpp" />
-    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Projectile.h" />
-    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Projectile.cpp" />
-    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Enemy.h" />
-    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Enemy.cpp" />
-    <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Tools.h" />
-    <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\Tools.cpp" />
     <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameWorld.h" />
     <ClCompile Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameWorld.cpp" />
     <ClInclude Include="D:\aDrive\file\CS100-HW89\src\PartForYou\GameObjects.h" />
@@ -286,6 +278,18 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\Enemy.vcxproj">
+      <Project>{57AA158C-05C4-3ECD-869B-D8A7F4C55703}</Project>
+      <Name>Enemy</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\Others.vcxproj">
+      <Project>{06D98264-6157-31B3-BD28-F053007761CD}</Project>
+      <Name>Others</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\Projectile.vcxproj">
+      <Project>{07FE29BB-E543-3951-AD9D-B4A79FC6DBCA}</Project>
+      <Name>Projectile</Name>
+    </ProjectReference>
     <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\ProvidedFramework.vcxproj">
       <Project>{A169F98E-7F97-32DE-8A7E-3B21B8E07728}</Project>
       <Name>ProvidedFramework</Name>
@@ -293,6 +297,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\SOIL\SOIL.vcxproj">
       <Project>{A08700E2-305C-3EBA-98F1-FAF956590A3E}</Project>
       <Name>SOIL</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\Tools.vcxproj">
+      <Project>{5B936CE5-BA54-3D2E-84D9-84B301F02D3D}</Project>
+      <Name>Tools</Name>
     </ProjectReference>
     <ProjectReference Include="D:\aDrive\file\CS100-HW89\build\freeglut\freeglut.vcxproj">
       <Project>{D24E835B-50F8-3CD5-96F2-687D4E2008A2}</Project>

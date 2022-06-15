@@ -83,14 +83,6 @@ ENDIF()
 add_library(
   PartForYou
   STATIC
-  src/PartForYou/Meteors.h
-  src/PartForYou/Meteors.cpp
-  src/PartForYou/Projectile.h
-  src/PartForYou/Projectile.cpp
-  src/PartForYou/Enemy.h
-  src/PartForYou/Enemy.cpp
-  src/PartForYou/Tools.h
-  src/PartForYou/Tools.cpp
   src/PartForYou/GameWorld.h
   src/PartForYou/GameWorld.cpp
   src/PartForYou/GameObjects.h
@@ -101,6 +93,10 @@ add_library(
 target_link_libraries(
   PartForYou
   ProvidedFramework
+  Enemy
+  Others
+  Projectile
+  Tools
 )
 
 target_include_directories(
@@ -109,8 +105,115 @@ target_include_directories(
   src/
   src/ProvidedFramework/
   src/PartForYou/
+  src/Enemy/
+  src/Others/
+  src/Projectile/
+  src/Tools/
 )
 
+add_library(
+  Enemy
+  STATIC
+  src/Enemy/Enemy.h
+  src/Enemy/Enemy.cpp
+)
+
+target_link_libraries(
+  PartForYou
+  ProvidedFramework
+  Enemy
+  Others
+  Projectile
+  Tools
+)
+
+target_include_directories(
+  Enemy
+  PUBLIC
+  src/
+  src/ProvidedFramework/
+  src/PartForYou/
+  src/Projectile/
+  src/Enemy/
+  src/Tools/
+)
+
+add_library(
+  Projectile
+  STATIC
+  src/Projectile/Meteors.h
+  src/Projectile/Meteors.cpp
+  src/Projectile/Projectile.h
+  src/Projectile/Projectile.cpp
+)
+
+target_link_libraries(
+  PartForYou
+  ProvidedFramework
+  Enemy
+  Others
+  Projectile
+  Tools
+)
+
+target_include_directories(
+  Projectile
+  PUBLIC
+  src/
+  src/ProvidedFramework/
+  src/PartForYou/
+  src/Projectile/
+)
+
+add_library(
+  Tools
+  STATIC
+  src/Tools/Tools.h
+  src/Tools/Tools.cpp
+)
+
+target_link_libraries(
+  PartForYou
+  ProvidedFramework
+  Enemy
+  Others
+  Projectile
+  Tools
+)
+
+target_include_directories(
+  Tools
+  PUBLIC
+  src/
+  src/ProvidedFramework/
+  src/PartForYou/
+  src/Tools/
+)
+
+add_library(
+  Others
+  STATIC
+  src/Others/Star.h
+  src/Others/Star.cpp
+)
+
+target_link_libraries(
+  PartForYou
+  ProvidedFramework
+  Enemy
+  Others
+  Projectile
+  Tools
+)
+
+target_include_directories(
+  Others
+  PUBLIC
+  src/
+  src/ProvidedFramework/
+  src/PartForYou/
+  src/Others/
+)
 add_executable(
   ${PROJECT_NAME}
   src/main.cpp
@@ -120,6 +223,10 @@ target_link_libraries(
   ${PROJECT_NAME}
   ProvidedFramework
   PartForYou
+  Enemy
+  Projectile
+  Tools
+  Others
 )
 
 target_include_directories(
@@ -128,4 +235,8 @@ target_include_directories(
   src/
   src/ProvidedFramework/
   src/PartForYou/
+  src/Enemy/
+  src/Projectile/
+  src/Tools/
+  src/Others/
 )

@@ -75,6 +75,9 @@ bool Enemy::CollDetect() {
 		DestroyIt();
 		theWorld->IncreasDestroyed(1);
 		player->SetHP(player->GetHP() - 20);
+		if (player->GetHP() <= 0) {
+			player->DestroyIt();
+		}
 		return true;
 	}
 	if (int hurt = theWorld->Detect(this, GameObject::bproj)) {
@@ -197,9 +200,9 @@ void Sigmatron::Update() {
 		return;
 	}
 	//4.¹¥»÷
-	SetShoot(0);
 	if (player->GetX() - this->GetX() <= 10 && player->GetX() - this->GetX() >= -10) {
 		SetFlightStrategy(2);
+		SetFlightTime(WINDOW_HEIGHT);
 		SetSpeed(10);
 		SetShoot(1);
 	}
@@ -219,9 +222,6 @@ void Sigmatron::Update() {
 	//7.·ÉÐÐ
 	if (NeedShoot() != 1) {
 		SetFlightTime(GetFlightTime() - 1);
-	}
-	else {
-		SetFlightTime(99);
 	}
 	switch (GetFlightStrategy())
 	{
@@ -267,7 +267,8 @@ void Omegatron::Update() {
 	//3.Åö×²¼ì²â
 	if (CollDetect()) {
 		theWorld->IncreaseScore(200);
-		if (randInt(1, 5) == 1 || randInt(1, 5) == 2) {
+		int probability = randInt(1, 5);
+		if (probability == 1 ||  probability == 2) {
 			if (randInt(1, 5) == 1) {
 				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::M_T, IMGID_METEOR_GOODIE, theWorld));
 			}
@@ -317,7 +318,8 @@ void Omegatron::Update() {
 	//ÔÙ´ÎÅö×²¼ì²â
 	if (CollDetect()) {
 		theWorld->IncreaseScore(200);
-		if (randInt(1, 5) == 1 || randInt(1, 5) == 2) {
+		int probability = randInt(1, 5);
+		if (probability == 1 || probability == 2) {
 			if (randInt(1, 5) == 1) {
 				theWorld->AddIn(new Tools(GetX(), GetY(), GameObject::M_T, IMGID_METEOR_GOODIE, theWorld));
 			}

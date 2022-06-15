@@ -31,6 +31,7 @@ void Meteors::Update()
 	}
 	MoveTo(GetX(), GetY() + 2);
 	SetDirection((GetDirection() + 5) % 360);
+	//ÔÙ´ÎÅö×²¼ì²â
 	if (int type = theWorld->Detect(this, enemy)) {
 		switch (type)
 		{

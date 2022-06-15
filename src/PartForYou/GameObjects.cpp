@@ -14,27 +14,6 @@ bool GameObject::JudgeDestroyed() const {
 	return isDestroyed;
 }
 
-//star
-Star::Star(int x, int y, double size) : GameObject(IMGID_STAR, x, y, 0, 4, size) {}
-
-bool Star::IsEnemy() {
-	return false;
-}
-
-void Star::Update() {
-	if (JudgeDestroyed()) return;
-	if (this->GetY() < 0) {
-		DestroyIt();
-		return;
-	}
-	MoveTo(GetX(), GetY() - 1);
-}
-
-int Star::GetType() const
-{
-	return star;
-}
-
 
 //Dawnbreaker
 Dawnbreaker::Dawnbreaker(int x, int y, WorldBase* worldptr) : 
@@ -120,12 +99,12 @@ Explosion::Explosion(int x, int y) :
 	GameObject(IMGID_EXPLOSION, x, y, 0, 3, 4.5), trick(1) {}
 
 void Explosion::Update() {
+	SetSize(GetSize() - 0.2);
 	if (trick == 20) {
 		DestroyIt();
 		return;
 	}
 	trick += 1;
-	SetSize(GetSize() - 0.2);
 }
 
 bool Explosion::IsEnemy()
