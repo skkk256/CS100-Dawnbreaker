@@ -105,7 +105,7 @@ void Alphatron::Update() {
 	//破坏检测
 	if (JudgeDestroyed()) return;
 	//是否需要破环
-	if (GetHP() <= 0 || GetY() < 0) {
+	if (GetHP() == 0 || GetY() < 0) {
 		DestroyIt();
 		return;
 	}
@@ -175,7 +175,7 @@ void Sigmatron::Update() {
 	//破坏检测
 	if (JudgeDestroyed()) return;
 	//是否需要破环
-	if (GetHP() <= 0 || GetY() < 0) {
+	if (GetHP() == 0 || GetY() < 0) {
 		DestroyIt();
 		return;
 	}
@@ -248,7 +248,7 @@ void Omegatron::Update() {
 	//破坏检测
 	if (JudgeDestroyed()) return;
 	//是否需要破环
-	if (GetHP() <= 0 || GetY() < 0) {
+	if (GetHP() == 0 || GetY() < 0) {
 		DestroyIt();
 		return;
 	}

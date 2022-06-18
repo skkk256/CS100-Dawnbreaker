@@ -30,7 +30,6 @@ public:
 
   bool DetectEnemy(GameObject* obj, int type);
 
-
 private:
 	int lives;
 	int destoryed = 0;
