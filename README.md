@@ -44,3 +44,14 @@ HW8/9
 - OJ 还没开...
 - 但是HW10开了😅😅...
 - HW10不会做🌿🌿🌿
+
+#### 6/22
+- 似乎很久没更新了来着
+- hw9 OJ大寄
+- 不过幸好还是成功在ddl前de完了
+- 还留了两天摆烂and开了把群星👽
+- 虽然提交次数有点感人(x
+- bug来源如下
+- case ... : GameWorld.Update()函数中各子项执行的顺序有问题，更新bar没有在遍历各对象update函数之后
+- case 9: alphatron通过添加tag方式发射子弹，使加入子弹的位置是基于移动后的飞机坐标
+- case 19: Enemy类在撞击dawnbreaker后没有判断dawnbreaker血量是否小于0，并摧毁
