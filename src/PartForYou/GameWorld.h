@@ -28,8 +28,17 @@ public:
 
   int DetectHurt(GameObject* obj);
 
+  bool DetectMete(GameObject* enemy);
+
   bool DetectEnemy(GameObject* obj, int type);
 
+  void AddProj();
+
+  void AddMete();
+
+  bool NewDetect(GameObject* a, GameObject* b);
+
+  std::list<GameObject*>& GetList();
 
 private:
 	int lives;

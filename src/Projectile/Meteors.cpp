@@ -12,11 +12,11 @@ void Meteors::Update()
 		return;
 	}
 	//Åö×²¼ì²â
-	if (int type = theWorld->DetectEnemy(this, Meter)) { return; }
+	theWorld->DetectEnemy(this, Meter);
 	MoveTo(GetX(), GetY() + 2);
 	SetDirection((GetDirection() + 5) % 360);
 	//ÔÙ´ÎÅö×²¼ì²â
-	if (int type = theWorld->DetectEnemy(this, Meter)) { return; }
+	theWorld->DetectEnemy(this, Meter);
 }
 
 bool Meteors::IsEnemy()

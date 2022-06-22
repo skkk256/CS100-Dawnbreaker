@@ -16,21 +16,15 @@ bool GameObject::JudgeDestroyed() const {
 
 
 //Dawnbreaker
-Dawnbreaker::Dawnbreaker(int x, int y, WorldBase* worldptr) : 
+Dawnbreaker::Dawnbreaker(int x, int y, GameWorld* worldptr) : 
 	GameObject(IMGID_DAWNBREAKER, x, y, 0, 0, 1.0), HP(100), energy(10), theWorld(worldptr) {}
 
 bool Dawnbreaker::IsEnemy() {
 	return false;
 }
 
-int Dawnbreaker::NeedShoot() {
-	int temp = shoot;
-	shoot = 0;
-	return temp;
-}
-
 void Dawnbreaker::Upgrade() {
-	upgradeTimes += 1;
+	upgradeTimes++;
 }
 
 int Dawnbreaker::GetUpgrade() const{
@@ -52,7 +46,7 @@ int Dawnbreaker::GetType() const
 
 void Dawnbreaker::IncreaseMeteors()
 {
-	meteors += 1;
+	meteors++;
 }
 
 int Dawnbreaker::GetMeteors() const
@@ -62,10 +56,6 @@ int Dawnbreaker::GetMeteors() const
 
 void Dawnbreaker::Update() {
 	if (JudgeDestroyed()) return;
-	if (HP <= 0) {
-		DestroyIt();
-		return;
-	}
 	if (energy < 10) energy += 1;
 	if ((GameWorld*)theWorld->GetKey(KeyCode::UP)) {
 		if (GetY() + 5 <= WINDOW_HEIGHT - 1)
@@ -83,14 +73,13 @@ void Dawnbreaker::Update() {
 		if (GetX() + 4 <= WINDOW_WIDTH - 1)
 			MoveTo(GetX() + 4, GetY());
 	}
-	shoot = 0;
 	if (theWorld->GetKey(KeyCode::FIRE1) && energy >= 10) {
 		energy -= 10;
-		shoot = 1;
+		theWorld->AddProj();
 	}
 	if (theWorld->GetKeyDown(KeyCode::FIRE2) && meteors >= 1) {
 		meteors -= 1;
-		shoot = 2;
+		theWorld->AddMete();
 	}
 }
 

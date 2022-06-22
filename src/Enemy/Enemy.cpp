@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "Tools.h"
 #include <cmath>
+#include <list>
 
 //Enemy
 Enemy::Enemy(const int IMGID, int x, int y, int HP, int aggressivity, int speed, int energy, GameWorld* worldptr) :
@@ -70,10 +71,14 @@ int Enemy::GetAgreesivity() const {
 
 bool Enemy::CollDetect() {
 	Dawnbreaker* player = theWorld->GetDawnbreaker();
-	if (theWorld->DetectPlayer(this, enemy)) {
+	if (theWorld->DetectMete(this)) {
+		DestroyIt();
+		theWorld->IncreasDestroyed(1);
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
 		return true;
 	}
-	if (int hurt = theWorld->DetectHurt(this)) {
+	int hurt = theWorld->DetectHurt(this);
+	if (hurt > 0) {
 		SetHP(GetHP() - hurt);
 		if (GetHP() <= 0) {
 			theWorld->AddIn(new Explosion(GetX(), GetY()));
@@ -81,10 +86,9 @@ bool Enemy::CollDetect() {
 			theWorld->IncreasDestroyed(1);
 			return true;
 		}
-		else {
-			return false;
-		}
 	}
+	if (theWorld->DetectPlayer(this, enemy))
+		return true;
 	return false;
 }
 
@@ -101,24 +105,57 @@ int Alphatron::GetType() const {
 }
 
 void Alphatron::Update() {
+	std::list<GameObject*>& objList = theWorld->GetList();
 	Dawnbreaker* player = theWorld->GetDawnbreaker();
 	//ÆÆ»µ¼ì²â
-	if (JudgeDestroyed()) return;
+	if (JudgeDestroyed() == true) 
+		return;
 	//ÊÇ·ñÐèÒªÆÆ»·
-	if (GetHP() <= 0 || GetY() < 0) {
+	if (GetY() < 0) {
 		DestroyIt();
 		return;
 	}
 	//3.Åö×²¼ì²é
-	if (CollDetect()) {
+	for (auto iter : objList) {
+		if (theWorld->NewDetect(this, iter) && iter->JudgeDestroyed() == false) {
+			if (iter->GetType() == Meter) {
+				DestroyIt();
+				theWorld->IncreaseScore(50);
+				theWorld->IncreasDestroyed(1);
+				theWorld->AddIn(new Explosion(GetX(), GetY()));
+				return;
+			}
+			if (iter->GetType() == proj && iter->IsEnemy() == false) {
+				iter->DestroyIt();
+				SetHP(GetHP() - ((Projectile*)(iter))->GetHurt());
+				if (GetHP() <= 0) {
+					DestroyIt();
+					theWorld->IncreaseScore(50);
+					theWorld->IncreasDestroyed(1);
+					theWorld->AddIn(new Explosion(GetX(), GetY()));
+					return;
+				}
+			}
+		}
+	}
+	if (theWorld->NewDetect(this, player) && player->JudgeDestroyed() == false) {
+		DestroyIt();
 		theWorld->IncreaseScore(50);
+		theWorld->IncreasDestroyed(1);
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
+		player->SetHP(player->GetHP() - 20);
+		if (player->GetHP() <= 0) {
+			player->DestroyIt();
+		}
 		return;
 	}
 	//4.¹¥»÷
-	SetShoot(0);
 	if ((player->GetX() - GetX() <= 10 && player->GetX() - this->GetX() >= -10) && GetEnergy() >= 25) {
 		if (randInt(1, 4) == 1) {
-			SetShoot(1);
+			Projectile* temp =
+				new Projectile(IMGID_RED_BULLET, GetX(), GetY() - 50, 180, 0.5, GetAgreesivity(), true, theWorld);
+			temp->SetFlightStrategy(2);
+			theWorld->AddIn(temp);
 			SetEnergy(GetEnergy() - 25);
 		}
 	}
@@ -141,8 +178,6 @@ void Alphatron::Update() {
 	SetFlightTime(GetFlightTime() - 1);
 	switch (GetFlightStrategy())
 	{
-	default:
-		break;
 	case 1:
 		MoveTo(GetX() - GetSpeed(), GetY() - GetSpeed());
 		break;
@@ -154,10 +189,40 @@ void Alphatron::Update() {
 		break;
 	}
 	//ÔÙ´ÎÅö×²¼ì²â
-	if (CollDetect()) {
+	for (auto iter : objList) {
+		if (theWorld->NewDetect(this, iter) && iter->JudgeDestroyed() == false) {
+			if (iter->GetType() == Meter) {
+				DestroyIt();
+				theWorld->IncreaseScore(50);
+				theWorld->IncreasDestroyed(1);
+				theWorld->AddIn(new Explosion(GetX(), GetY()));
+				return;
+			}
+			if (iter->GetType() == proj && iter->IsEnemy() == false) {
+				iter->DestroyIt();
+				SetHP(GetHP() - ((Projectile*)(iter))->GetHurt());
+				if (GetHP() <= 0) {
+					DestroyIt();
+					theWorld->IncreaseScore(50);
+					theWorld->IncreasDestroyed(1);
+					theWorld->AddIn(new Explosion(GetX(), GetY()));
+					return;
+				}
+			}
+		}
+	}
+	if (theWorld->NewDetect(this, player) && player->JudgeDestroyed() == false) {
+		DestroyIt();
 		theWorld->IncreaseScore(50);
+		theWorld->IncreasDestroyed(1);
+		theWorld->AddIn(new Explosion(GetX(), GetY()));
+		player->SetHP(player->GetHP() - 20);
+		if (player->GetHP() <= 0) {
+			player->DestroyIt();
+		}
 		return;
 	}
+	return;
 }
 
 //Sigmatron
@@ -245,6 +310,7 @@ int Omegatron::GetType() const {
 
 void Omegatron::Update() {
 	Dawnbreaker* player = theWorld->GetDawnbreaker();
+	SetShoot(0);
 	//ÆÆ»µ¼ì²â
 	if (JudgeDestroyed()) return;
 	//ÊÇ·ñÐèÒªÆÆ»·
@@ -267,7 +333,6 @@ void Omegatron::Update() {
 		return;
 	}
 	//4.¹¥»÷
-	SetShoot(0);
 	if (GetEnergy() >= 50) {
 		SetShoot(1);
 		SetEnergy(GetEnergy() - 50);

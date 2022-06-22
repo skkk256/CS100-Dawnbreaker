@@ -163,6 +163,8 @@ target_include_directories(
   src/ProvidedFramework/
   src/PartForYou/
   src/Projectile/
+  src/Enemy/
+  src/Tools/
 )
 
 add_library(

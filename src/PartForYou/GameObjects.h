@@ -4,6 +4,8 @@
 #include "ObjectBase.h"
 #include "WorldBase.h"
 
+class GameWorld;
+
 class GameObject : public ObjectBase {
 private:
 	bool isDestroyed;
@@ -21,14 +23,12 @@ private:
 	int HP;
 	int energy;
 	int upgradeTimes = 0;
-	int meteors = 0;
-	int shoot = 0;
-	WorldBase* theWorld;
+	int meteors = 0;///////////////
+	GameWorld* theWorld;
 public:
-	Dawnbreaker(int x, int y, WorldBase* worldptr);
+	Dawnbreaker(int x, int y, GameWorld* worldptr);
 	void Update() override;
 	bool IsEnemy() override;
-	int NeedShoot();
 	void Upgrade();
 	int GetUpgrade() const;
 	void SetHP(int hp);

@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "Meteors.h"
 #include "Star.h"
+#include "Tools.h"
 #include "Projectile.h"
 #include <algorithm>
 #include <sstream>
@@ -31,7 +32,7 @@ LevelStatus GameWorld::Update() {
 	allowed = std::min(todestroyed, maxOnScreen);
 	if (randInt(1, 30) == 1)
 		ObjectList.push_back(new Star(randInt(0, WINDOW_WIDTH - 1), WINDOW_HEIGHT - 1, randInt(10, 40) / 100.0));
-	if ((allowed > onScreen)&& (randInt(1,100) <= allowed - onScreen)) {
+	if ((allowed > onScreen) && (randInt(1,100) <= allowed - onScreen)) {
 		int p1 = 6;
 		int p2 = 2 * std::max(GetLevel() - 1, 0);
 		int p3 = 3 * std::max(GetLevel() - 2, 0);
@@ -58,32 +59,16 @@ LevelStatus GameWorld::Update() {
 	}
 	//遍历现有对象和dawnbreaker
 	dawnbreaker->Update();
-	int temp = dawnbreaker->NeedShoot();
-	if (temp == 1) {
-		ObjectList.push_back(
-			new Projectile(IMGID_BLUE_BULLET, dawnbreaker->GetX(), dawnbreaker->GetY() + 50, 0, 0.5 + 0.1 * dawnbreaker->GetUpgrade(), 5 + 3 * dawnbreaker->GetUpgrade(), false, this)
-		);
-	}
-	else if (temp == 2) {
-		ObjectList.push_back(
-			new Meteors(dawnbreaker->GetX(), dawnbreaker->GetY() + 100, this)
-		);
-	}
-
 	for (auto iter = ObjectList.begin(); iter != ObjectList.end(); iter++) {
 		(*iter)->Update();
+		if (dawnbreaker->JudgeDestroyed() == true) {
+			break;
+		}
+		if (destoryed >= 3 * GetLevel()) {
+			break;
+		}
 		switch ((*iter)->GetType())
 		{
-		case GameObject::alpha:
-			if (((Enemy*)(*iter))->NeedShoot()) {
-				GameObject* ptr_temp = 
-					new Projectile(IMGID_RED_BULLET, (*iter)->GetX(), (*iter)->GetY() - 50, 180, 0.5, ((Enemy*)(*iter))->GetAgreesivity(), true, this);
-				ObjectList.push_back(ptr_temp);
-				((Projectile*)ptr_temp)->SetFlightStrategy(2);
-			}
-			break;
-		case GameObject::sigma:
-			break;
 		case GameObject::omega:
 			if (((Enemy*)(*iter))->NeedShoot()) {
 				GameObject* ptr_temp =
@@ -102,7 +87,7 @@ LevelStatus GameWorld::Update() {
 		lives -= 1;
 		return LevelStatus::DAWNBREAKER_DESTROYED;
 	}
-	if (destoryed == 3 * GetLevel()) {
+	if (destoryed >= 3 * GetLevel()) {
 		return LevelStatus::LEVEL_CLEARED;
 	}
 
@@ -149,7 +134,9 @@ bool GameWorld::IsGameOver() const {
 
 bool GameWorld::DetectPlayer(GameObject* obj, int type)
 {
-	int d = std::sqrt(pow(obj->GetX() - dawnbreaker->GetX(), 2) + pow(obj->GetY() - dawnbreaker->GetY(), 2));
+	if (dawnbreaker->JudgeDestroyed())
+		return false;
+	double d = pow(pow(obj->GetX() - dawnbreaker->GetX(), 2) + pow(obj->GetY() - dawnbreaker->GetY(), 2), 0.5);
 	if (d < 30.0 * (obj->GetSize() + dawnbreaker->GetSize())) {
 		if (type == GameObject::tool) {
 			obj->DestroyIt();
@@ -168,24 +155,33 @@ bool GameWorld::DetectPlayer(GameObject* obj, int type)
 		else if (type == GameObject::rproj) {
 			dawnbreaker->SetHP(dawnbreaker->GetHP() - ((Projectile*)(obj))->GetHurt());
 			obj->DestroyIt();
+			if (dawnbreaker->GetHP() <= 0) {
+				dawnbreaker->DestroyIt();
+			}
 			return true;
 		}
 	}
 	return false;
 }
 
+bool GameWorld::DetectMete(GameObject* enemy) {
+	for (auto ptr : ObjectList) {
+		if (ptr->GetType() == GameObject::Meter && !(ptr->JudgeDestroyed())) {
+			double d = pow(pow(enemy->GetX() - ptr->GetX(), 2) + pow(enemy->GetY() - ptr->GetY(), 2), 0.5);
+			if (d < 30.0 * (enemy->GetSize() + ptr->GetSize())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
 int GameWorld::DetectHurt(GameObject* enemy) {
 	for (auto ptr : ObjectList) {
-		if ((ptr->GetType() == GameObject::proj || ptr->GetType() == GameObject::Meter) && (!(ptr->IsEnemy())) && (!(ptr->JudgeDestroyed()))) {
-			int d = std::sqrt(pow(enemy->GetX() - ptr->GetX(), 2) + pow(enemy->GetY() - ptr->GetY(), 2));
+		if ((ptr->GetType() == GameObject::proj) && (!(ptr->IsEnemy())) && (!(ptr->JudgeDestroyed()))) {
+			double d = pow(pow(enemy->GetX() - ptr->GetX(), 2) + pow(enemy->GetY() - ptr->GetY(), 2), 0.5);
 			if (d < 30.0 * (enemy->GetSize() + ptr->GetSize())) {
-				switch (ptr->GetType()) {
-				case GameObject::Meter:
-					return 999;
-				case GameObject::proj:
-					ptr->DestroyIt();
-					return ((Projectile*)(ptr))->GetHurt();
-				}
+				ptr->DestroyIt();
+				return ((Projectile*)(ptr))->GetHurt();
 			}
 		}
 	}
@@ -195,57 +191,60 @@ int GameWorld::DetectHurt(GameObject* enemy) {
 bool GameWorld::DetectEnemy(GameObject* obj, int who) {
 	for (auto ptr : ObjectList) {
 		int type = ptr->GetType();
-		if ((type == GameObject::alpha || type == GameObject::sigma || type == GameObject::omega) && (!(ptr->JudgeDestroyed()))) {
-			int d = std::sqrt(pow(obj->GetX() - ptr->GetX(), 2) + pow(obj->GetY() - ptr->GetY(), 2));
-			if (d < 30.0 * (obj->GetSize() + ptr->GetSize())) {
-				if (who == GameObject::Meter) {
-					IncreasDestroyed(1);
-					ptr->DestroyIt();
-					ObjectList.push_back(new Explosion(ptr->GetX(), ptr->GetY()));
-					switch (((Enemy*)(ptr))->GetType())
-					{
-					case GameObject::alpha:
-						IncreaseScore(50);
-						break;
-					case GameObject::sigma:
-						IncreaseScore(100);
-						break;
-					case GameObject::omega:
-						IncreaseScore(200);
-						break;
+		double d = pow(pow(obj->GetX() - ptr->GetX(), 2) + pow(obj->GetY() - ptr->GetY(), 2), 0.5);
+		if (d < 30.0 * (obj->GetSize() + ptr->GetSize()) && ptr->JudgeDestroyed() == false) {
+			if (type == GameObject::alpha || type == GameObject::sigma || type == GameObject::omega) {
+				IncreasDestroyed(1);
+				ptr->DestroyIt();
+				ObjectList.push_back(new Explosion(ptr->GetX(), ptr->GetY()));
+				switch (ptr->GetType())
+				{
+				case GameObject::alpha:
+					IncreaseScore(50);
+					break;
+				case GameObject::sigma:
+					IncreaseScore(100);
+					if (randInt(1, 5) == 1) {
+						ObjectList.push_back(
+							new Tools(ptr->GetX(), ptr->GetY(), GameObject::HP_T, IMGID_HP_RESTORE_GOODIE, this)
+						);
 					}
-				}
-				else if (who == GameObject::bproj) {
-					((Enemy*)(ptr))->SetHP(((Enemy*)(ptr))->GetHP() - ((Projectile*)(obj))->GetHurt());
-					if (((Enemy*)(ptr))->GetHP() <= 0) {
-						IncreasDestroyed(1);
-						ptr->DestroyIt();
-						ObjectList.push_back(new Explosion(ptr->GetX(), ptr->GetY()));
-						switch (((Enemy*)(ptr))->GetType())
-						{
-						case GameObject::alpha:
-							IncreaseScore(50);
-							break;
-						case GameObject::sigma:
-							IncreaseScore(100);
-							break;
-						case GameObject::omega:
-							IncreaseScore(200);
-							break;
+					break;
+				case GameObject::omega:
+					IncreaseScore(200);
+					int probability = randInt(1, 5);
+					if (probability == 1 || probability == 2) {
+						if (randInt(1, 5) == 1) {
+							ObjectList.push_back(
+								new Tools(ptr->GetX(), ptr->GetY(), GameObject::M_T, IMGID_METEOR_GOODIE, this)
+							);
 						}
-						obj->DestroyIt();
-						return true;
+						else {
+							ObjectList.push_back(
+								new Tools(ptr->GetX(), ptr->GetY(), GameObject::U_T, IMGID_POWERUP_GOODIE, this)
+							);
+						}
 					}
-					else {
-						obj->DestroyIt();
-						return true;
-					}
+					break;
 				}
 			}
-
 		}
 	}
-	return false;
+	return true;
+}
+
+void GameWorld::AddProj()
+{
+	ObjectList.push_back(
+		new Projectile(IMGID_BLUE_BULLET, dawnbreaker->GetX(), dawnbreaker->GetY() + 50, 0, 0.5 + 0.1 * dawnbreaker->GetUpgrade(), 5 + 3 * dawnbreaker->GetUpgrade(), false, this)
+		);
+}
+
+void GameWorld::AddMete()
+{
+	ObjectList.push_back(
+		new Meteors(dawnbreaker->GetX(), dawnbreaker->GetY() + 100, this)
+	);
 }
 
 
@@ -263,5 +262,17 @@ void GameWorld::IncreasDestroyed(int n)
 {
 	destoryed += n;
 }
+
+//remake
+std::list<GameObject*>& GameWorld::GetList()
+{
+	return ObjectList;
+}
+
+bool GameWorld::NewDetect(GameObject* a, GameObject* b) {
+	double d = pow(pow(a->GetX() - b->GetX(), 2) + pow(a->GetY() - b->GetY(), 2), 0.5);
+	return (d < 30.0 * (a->GetSize() + b->GetSize()));
+}
+
 
 
